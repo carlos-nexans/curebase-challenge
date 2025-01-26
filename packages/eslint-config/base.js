@@ -29,4 +29,10 @@ export const config = [
   {
     ignores: ["dist/**"],
   },
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
 ];

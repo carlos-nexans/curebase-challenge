@@ -20,14 +20,9 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'apps/api/package.json'
 
-    - name: Install dependencies
+    - name: Install dependencies, setup Prisma and run tests
       working-directory: apps/api
-      run: npm ci
-
-    - name: Setup Prisma
-      working-directory: apps/api
-      run: npx prisma generate
-
-    - name: Run tests
-      working-directory: apps/api
-      run: npm test
+      run: |
+        npm install
+        npx prisma generate
+        npm test

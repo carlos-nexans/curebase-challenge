@@ -13,8 +13,8 @@ export class TrialsService {
   async getParticipantsByTrialId(trialId: number) {
     return this.prismaService.participant.findMany({
       where: {
-        trialId: trialId
-      }
+        trialId: trialId,
+      },
     });
   }
 
@@ -22,8 +22,8 @@ export class TrialsService {
     return this.prismaService.trial.findUnique({
       where: { id },
       include: {
-        participants: includeParticipants
-      }
+        participants: includeParticipants,
+      },
     });
   }
 
@@ -31,9 +31,9 @@ export class TrialsService {
     return this.prismaService.trial.findMany({
       include: {
         _count: {
-          select: { participants: true }
-        }
-      }
+          select: { participants: true },
+        },
+      },
     });
   }
 }

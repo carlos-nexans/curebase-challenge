@@ -1,11 +1,11 @@
 "use client"
 
-import { Card, CardHeader, CardContent, List, ListItem, ListItemContent } from "@repo/ui/containers"
+import { Card, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import { PrimaryButton } from "@repo/ui/buttons"
 import Image from "next/image"
 import { useQuery } from '@tanstack/react-query'
-import { request, gql } from 'graphql-request'
+import { gql } from 'graphql-request'
 import { Participant } from '@repo/api/graphql'
 import { graphqlClient } from "../queryClient"
 
@@ -14,8 +14,7 @@ const GET_PARTICIPANTS = gql`
     participants {
       id
       name
-      createdAt
-      status
+      enrolledAt
     }
   }
 `
@@ -54,7 +53,7 @@ export default function ParticipantsPage() {
                   />
                 </div>
                 <Text>
-                  {`Enrolled in ${new Date(participant.createdAt).toLocaleDateString('en-US', {
+                  {`Enrolled in ${new Date(participant.enrolledAt).toLocaleDateString('en-US', {
                     month: 'long',
                     day: 'numeric',
                     year: 'numeric'

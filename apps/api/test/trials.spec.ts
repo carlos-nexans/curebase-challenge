@@ -34,10 +34,10 @@ describe('Trials (e2e)', () => {
               name
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.trials).toBeDefined();
         expect(Array.isArray(res.body.data.trials)).toBeTruthy();
       });
@@ -62,13 +62,15 @@ describe('Trials (e2e)', () => {
               }
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.trials).toBeDefined();
         expect(Array.isArray(res.body.data.trials)).toBeTruthy();
-        expect(Array.isArray(res.body.data.trials[0]?.participants)).toBeTruthy();
+        expect(
+          Array.isArray(res.body.data.trials[0]?.participants),
+        ).toBeTruthy();
       });
   });
 
@@ -84,10 +86,10 @@ describe('Trials (e2e)', () => {
               participantCount
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.trials).toBeDefined();
         expect(Array.isArray(res.body.data.trials)).toBeTruthy();
         expect(typeof res.body.data.trials[0]?.participantCount).toBe('number');
@@ -108,10 +110,10 @@ describe('Trials (e2e)', () => {
               }
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.trial).toBeDefined();
         expect(res.body.data.trial.id).toBe(1);
         expect(Array.isArray(res.body.data.trial.participants)).toBeTruthy();

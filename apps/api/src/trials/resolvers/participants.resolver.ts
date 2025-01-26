@@ -1,9 +1,14 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent, Info } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { TrialsService } from '../services/trials.service';
 import { Participant } from 'src/graphql';
 import { ParticipantsService } from '../services/participants.service';
-import { FieldNode } from 'graphql';
-import { GraphQLResolveInfo } from 'graphql';
 
 @Resolver('Participant')
 export class ParticipantsResolver {
@@ -23,19 +28,13 @@ export class ParticipantsResolver {
   }
 
   @Mutation('createParticipant')
-  async createParticipant(
-    @Args('name') name: string,
-    @Args('height') height: number,
-    @Args('weight') weight: number,
-    @Args('hasDiabetes') hasDiabetes: boolean,
-    @Args('hadCovid') hadCovid: boolean,
-    @Args('trialId') trialId: number,
-  ) {
+  async createParticipant() {
+    // @Args('trialId') trialId: number, // @Args('hadCovid') hadCovid: boolean, // @Args('hasDiabetes') hasDiabetes: boolean, // @Args('weight') weight: number, // @Args('height') height: number, // @Args('name') name: string,
     throw new Error('Not implemented');
   }
 
   @ResolveField('trial')
-  async getTrial(@Parent() participant: Participant, @Info() info: GraphQLResolveInfo) {
+  async getTrial(@Parent() participant: Participant) {
     return this.trialsService.getTrial(participant.trialId, false);
   }
 }

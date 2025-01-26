@@ -27,7 +27,7 @@ export interface Participant {
     name: string;
     height: number;
     weight: number;
-    createdAt: string;
+    enrolledAt: Date;
     hasDiabetes: boolean;
     hadCovid: boolean;
     trialId: number;

@@ -39,10 +39,10 @@ describe('Participants (e2e)', () => {
               trialId
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.participants).toBeDefined();
         expect(Array.isArray(res.body.data.participants)).toBeTruthy();
       });
@@ -68,17 +68,17 @@ describe('Participants (e2e)', () => {
               }
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.participant).toBeDefined();
         expect(res.body.data.participant.id).toBe(1);
         expect(res.body.data.participant.trial).toBeDefined();
       });
   });
 
-  it.only('should fetch participants with trial information', () => {
+  it('should fetch participants with trial information', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -93,15 +93,45 @@ describe('Participants (e2e)', () => {
               }
             }
           }
-        `
+        `,
       })
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body.data.participants).toBeDefined();
         expect(Array.isArray(res.body.data.participants)).toBeTruthy();
         if (res.body.data.participants.length > 0) {
           expect(res.body.data.participants[0].trial).toBeDefined();
         }
+      });
+  });
+
+  it('should reject queries exceeding maximum depth', () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          query {
+            participants {
+              id
+              trial {
+                id
+                participants {
+                  id
+                }
+              }
+            }
+          }
+        `,
+      })
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.errors).toBeDefined();
+        expect(res.body.errors[0].message).toContain(
+          'exceeds maximum operation depth of 2',
+        );
+        expect(res.body.errors[0].extensions.code).toBe(
+          'GRAPHQL_VALIDATION_FAILED',
+        );
       });
   });
 });

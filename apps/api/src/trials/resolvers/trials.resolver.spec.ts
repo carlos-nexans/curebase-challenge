@@ -47,14 +47,16 @@ describe('TrialsResolver', () => {
   describe('getTrials', () => {
     it('should return trials without participant count when not requested', async () => {
       const mockInfo = {
-        fieldNodes: [{
-          selectionSet: {
-            selections: [
-              { kind: 'Field', name: { value: 'id' } },
-              { kind: 'Field', name: { value: 'name' } },
-            ],
+        fieldNodes: [
+          {
+            selectionSet: {
+              selections: [
+                { kind: 'Field', name: { value: 'id' } },
+                { kind: 'Field', name: { value: 'name' } },
+              ],
+            },
           },
-        }],
+        ],
       } as unknown as GraphQLResolveInfo;
 
       trialsService.getTrials.mockResolvedValue(mockTrials);
@@ -62,22 +64,28 @@ describe('TrialsResolver', () => {
       const result = await resolver.getTrials(mockInfo);
       expect(result).toEqual(mockTrials);
       expect(trialsService.getTrials).toHaveBeenCalled();
-      expect(trialsService.getTrialsWithParticipantCounts).not.toHaveBeenCalled();
+      expect(
+        trialsService.getTrialsWithParticipantCounts,
+      ).not.toHaveBeenCalled();
     });
 
     it('should return trials with participant count when requested', async () => {
       const mockInfo = {
-        fieldNodes: [{
-          selectionSet: {
-            selections: [
-              { kind: 'Field', name: { value: 'id' } },
-              { kind: 'Field', name: { value: 'participantCount' } },
-            ],
+        fieldNodes: [
+          {
+            selectionSet: {
+              selections: [
+                { kind: 'Field', name: { value: 'id' } },
+                { kind: 'Field', name: { value: 'participantCount' } },
+              ],
+            },
           },
-        }],
+        ],
       } as unknown as GraphQLResolveInfo;
 
-      trialsService.getTrialsWithParticipantCounts.mockResolvedValue(mockTrialsWithCounts);
+      trialsService.getTrialsWithParticipantCounts.mockResolvedValue(
+        mockTrialsWithCounts,
+      );
 
       const result = await resolver.getTrials(mockInfo);
       expect(result).toEqual([
@@ -91,14 +99,16 @@ describe('TrialsResolver', () => {
   describe('getTrial', () => {
     it('should return a single trial without participants when not requested', async () => {
       const mockInfo = {
-        fieldNodes: [{
-          selectionSet: {
-            selections: [
-              { kind: 'Field', name: { value: 'id' } },
-              { kind: 'Field', name: { value: 'name' } },
-            ],
+        fieldNodes: [
+          {
+            selectionSet: {
+              selections: [
+                { kind: 'Field', name: { value: 'id' } },
+                { kind: 'Field', name: { value: 'name' } },
+              ],
+            },
           },
-        }],
+        ],
       } as unknown as GraphQLResolveInfo;
 
       const mockTrial = { id: 1, name: 'Trial 1' };
@@ -111,14 +121,16 @@ describe('TrialsResolver', () => {
 
     it('should return a single trial with participants when requested', async () => {
       const mockInfo = {
-        fieldNodes: [{
-          selectionSet: {
-            selections: [
-              { kind: 'Field', name: { value: 'id' } },
-              { kind: 'Field', name: { value: 'participants' } },
-            ],
+        fieldNodes: [
+          {
+            selectionSet: {
+              selections: [
+                { kind: 'Field', name: { value: 'id' } },
+                { kind: 'Field', name: { value: 'participants' } },
+              ],
+            },
           },
-        }],
+        ],
       } as unknown as GraphQLResolveInfo;
 
       const mockTrial = { id: 1, name: 'Trial 1', participants: [] };
@@ -145,8 +157,10 @@ describe('TrialsResolver', () => {
     it('should fetch participants if not already loaded', async () => {
       const mockTrial = { id: 1 };
       const mockParticipants = [{ id: 1, name: 'Participant 1' }];
-      
-      trialsService.getParticipantsByTrialId.mockResolvedValue(mockParticipants as any);
+
+      trialsService.getParticipantsByTrialId.mockResolvedValue(
+        mockParticipants as any,
+      );
 
       const result = await resolver.getParticipants(mockTrial as any);
       expect(result).toEqual(mockParticipants);
