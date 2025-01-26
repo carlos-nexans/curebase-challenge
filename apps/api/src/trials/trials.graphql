@@ -1,0 +1,36 @@
+type Query {
+  trials: [Trial!]!
+  trial(id: Int!): Trial
+  participants: [Participant!]!
+  participant(id: Int!): Participant
+}
+
+type Trial {
+  id: Int!
+  name: String!
+  participants: [Participant!]!
+  participantCount: Int!
+}
+
+type Participant {
+  id: Int!
+  name: String!
+  height: Float!
+  weight: Float!
+  hasDiabetes: Boolean!
+  hadCovid: Boolean!
+  trialId: Int!
+  trial: Trial!
+}
+
+type Mutation {
+  createTrial(name: String!): Trial!
+  createParticipant(
+    name: String!
+    height: Float!
+    weight: Float!
+    hasDiabetes: Boolean!
+    hadCovid: Boolean!
+    trialId: Int!
+  ): Participant!
+}
