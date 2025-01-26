@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./typography": "./src/typography.tsx",
+    "./containers": "./src/containers.tsx",
+    "./buttons": "./src/buttons.tsx",
+    "./forms": "./src/forms.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
