@@ -1,10 +1,13 @@
 {
-  "name": "api",
+  "name": "@repo/api",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "exports": {
+    "./graphql": "./src/graphql.ts"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

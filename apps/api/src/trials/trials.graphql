@@ -17,6 +17,7 @@ type Participant {
   name: String!
   height: Float!
   weight: Float!
+  createdAt: String!
   hasDiabetes: Boolean!
   hadCovid: Boolean!
   trialId: Int!

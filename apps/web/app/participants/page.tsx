@@ -4,20 +4,32 @@ import { Card, CardHeader, CardContent, List, ListItem, ListItemContent } from "
 import { Heading1, Text } from "@repo/ui/typography"
 import { PrimaryButton } from "@repo/ui/buttons"
 import Image from "next/image"
+import { useQuery } from '@tanstack/react-query'
+import { request, gql } from 'graphql-request'
+import { Participant } from '@repo/api/graphql'
+import { graphqlClient } from "../queryClient"
+
+const GET_PARTICIPANTS = gql`
+  query GetParticipants {
+    participants {
+      id
+      name
+      createdAt
+      status
+    }
+  }
+`
 
 export default function ParticipantsPage() {
-  const participants = [
-    { name: "Lisa Schäfer", status: "Enrolled" },
-    { name: "Randy Ross", status: "Enrolled" },
-    { name: "Martha Steel Mathew", status: "Enrolled" },
-    { name: "Cooper Stanton", status: "Enrolled" },
-    { name: "Karen Mango", status: "Enrolled" },
-    { name: "Kathryn Westervelt", status: "Enrolled" },
-    { name: "Henrik Lipshultz", status: "Enrolled" },
-    { name: "Miranda Stanton", status: "Enrolled" },
-    { name: "Gretchen Dixon", status: "Enrolled" },
-    { name: "Kathryn Bourgan", status: "Enrolled" },
-  ]
+  const { data, isLoading, error } = useQuery<{participants: Participant[]}>({
+    queryKey: ['participants'],
+    queryFn: async () => {
+      return await graphqlClient.request(GET_PARTICIPANTS)
+    }
+  })
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading participants</div>
 
   return (
     <Card>
@@ -28,8 +40,8 @@ export default function ParticipantsPage() {
         </PrimaryButton>
       </CardHeader>
       <List>
-        {participants.map((participant, i) => (
-          <ListItem key={i}>
+        {data?.participants.map((participant) => (
+          <ListItem key={participant.id}>
             <ListItemContent>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -41,7 +53,13 @@ export default function ParticipantsPage() {
                     height={13}
                   />
                 </div>
-                <Text>{participant.status}</Text>
+                <Text>
+                  {`Enrolled in ${new Date(participant.createdAt).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}`}
+                </Text>
               </div>
             </ListItemContent>
           </ListItem>
