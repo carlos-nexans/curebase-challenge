@@ -6,10 +6,15 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "start": "turbo start",
-    "test": "turbo test",
+    "test": "npm run test:unit",
+    "test:unit": "turbo test:unit",
+    "test:integration": "turbo test:integration",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prisma": "cd apps/api && npx prisma generate",
-    "postinstall": "npm run prisma"
+    "postinstall": "npm run prisma",
+    "db:seed": "cd apps/api && npm run db:seed",
+    "db:migrate": "cd apps/api && npm run db:migrate",
+    "db:reset": "cd apps/api && npm run db:reset"
   },
   "devDependencies": {
     "prettier": "^3.4.2",

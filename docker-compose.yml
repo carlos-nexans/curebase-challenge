@@ -5,12 +5,14 @@ services:
     build:
       context: .
       dockerfile: web.Dockerfile
+      args:
+        - NEXT_PUBLIC_GRAPHQL_URL=http://api:3001/graphql
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://api:3001  # Internal Docker network URL
-      - API_URL=http://api:3001              # Internal Docker network URL
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - API_URL=http://api:3001
     depends_on:
       - api
     networks:
@@ -25,8 +27,86 @@ services:
     environment:
       - NODE_ENV=development
       - CORS_ORIGIN=http://localhost:3000    # Allow requests from local web
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - app_network
+
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+  db-migrate:
+    image: node:22-alpine3.20
+    working_dir: /app
+    command: >
+      sh -c "
+        apk add --no-cache netcat-openbsd &&
+        echo 'Waiting for database to be ready...' &&
+        while ! nc -z db 5432; do
+          sleep 1
+        done &&
+        echo 'Database is ready!' &&
+        npm install && 
+        npm run db:migrate"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - tools
+    networks:
+      - app_network
+
+  db-seed:
+    image: node:22-alpine3.20
+    working_dir: /app
+    command: >
+      sh -c "
+        apk add --no-cache netcat-openbsd &&
+        echo 'Waiting for migrations to complete...' &&
+        while ! nc -z db 5432; do
+          sleep 1
+        done &&
+        until npm run db:migration-check 2>/dev/null; do
+          echo 'Waiting for migrations to complete...'
+          sleep 2
+        done &&
+        echo 'Migrations completed! Starting seed...' &&
+        npm install && 
+        npm run db:seed"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    depends_on:
+      - db-migrate
+    profiles:
+      - tools
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
 
 networks:
   app_network:

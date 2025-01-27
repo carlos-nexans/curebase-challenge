@@ -10,6 +10,10 @@ jobs:
   api-test:
     name: API Tests
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.18
+        options: --privileged # Enables Testcontainers to run Docker-in-Docker
     env:
       MIN_COVERAGE: 85
       
@@ -23,12 +27,18 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'apps/api/package.json'
 
-    - name: Install dependencies, setup Prisma and run tests
+    - name: Start database and run migrations
       working-directory: apps/api
       run: |
+        docker compose up -d db
         npm install
         npx prisma generate
-        npm test -- --coverage --coverageThreshold='{"global":{"lines":${{ env.MIN_COVERAGE }}}}'
+        npm run db:migrate
+        npm run db:seed
+
+    - name: Run tests
+      working-directory: apps/api
+      run: npm test -- --coverage --coverageThreshold='{"global":{"lines":${{ env.MIN_COVERAGE }}}}'
 
   lint:
     name: Lint
