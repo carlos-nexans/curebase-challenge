@@ -83,7 +83,7 @@ describe('ParticipantsPage', () => {
   })
 
   it('shows loading state when participants are being fetched', () => {
-    (graphqlClient.request as Mock).mockImplementationOnce(() => new Promise(() => {})) // Never resolves
+    (graphqlClient.request as Mock).mockImplementationOnce(() => new Promise(() => {}))
 
     render(<ParticipantsPage />, { wrapper: createWrapper() })
 

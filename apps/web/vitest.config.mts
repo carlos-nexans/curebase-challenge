@@ -11,6 +11,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       reportsDirectory: './tests/coverage',
+      thresholds: {
+        lines: 80,
+      },
       exclude: [
         '.next/**',
         '**/next.config.*',

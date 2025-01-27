@@ -25,7 +25,7 @@ This is a technical assessment for the Sr. Engineer position at Curebase. The as
 
 The frontend application is accessible at https://curebase.carlosnexans.com.
 
-The GraphQL API is accessible at https://api-curebase.carlosnexans.com/graphql
+The GraphQL API is accessible at https://api-curebase.carlosnexans.com/graphql.
 
 ## Scaffolding
 
@@ -65,17 +65,21 @@ I chose Next.js over Create React App (CRA) due to its extensibility, community 
 
 - Adoption and Community: As noted in the State of JS survey, most of the React community has moved to metaframeworks. Next.js is the most widely adopted metaframework, ensuring better support, tooling, and resources.
 
-### Backend: NestJS and GraphQL
+### Backend: NestJS, GraphQL, and PostgreSQL
 
-I retained NestJS for the backend and GraphQL for API communication due to their alignment with modern backend requirements:
+I retained NestJS for the backend and GraphQL for API communication, while choosing PostgreSQL as the database solution:
 
 - NestJS provides a modular and scalable architecture, ideal for implementing complex business logic.
 
 - GraphQL is well-suited for the application's needs, offering:
-
   - Flexible querying capabilities.
-
   - A strongly-typed schema, ensuring robust data validation and type safety.
+
+- PostgreSQL was selected as the database for several key advantages:
+  - ACID Compliance: Ensures data integrity and reliability
+  - Scalability: Excellent performance with large datasets and concurrent users
+  - Rich Feature Set: Advanced indexing, full-text search, and constraint capabilities
+  - Strong Community: Extensive tooling and support ecosystem
 
 This combination ensures a clean separation of business logic, better maintainability, and extensibility.
 

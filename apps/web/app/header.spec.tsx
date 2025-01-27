@@ -7,7 +7,6 @@ vi.mock('next/image', () => ({
 }))
 
 describe('NavigationHeader', () => {
-  // Cleanup after each test
   afterEach(() => {
     cleanup()
   })

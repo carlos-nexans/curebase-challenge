@@ -59,7 +59,7 @@ describe('TrialsPage', () => {
   })
 
   it('shows loading state when trials are being fetched', () => {
-    (graphqlClient.request as Mock).mockImplementationOnce(() => new Promise(() => {})) // Never resolves
+    (graphqlClient.request as Mock).mockImplementationOnce(() => new Promise(() => {}))
 
     render(<TrialsPage />, { wrapper: createWrapper() })
 
