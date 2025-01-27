@@ -25,7 +25,6 @@ type MutationResult = {
   createParticipant: EnrollmentResult
 }
 
-// Add this GraphQL mutation
 const CREATE_PARTICIPANT_MUTATION = `
   mutation CreateParticipant(
     $name: String!
@@ -49,7 +48,6 @@ const CREATE_PARTICIPANT_MUTATION = `
   }
 `
 
-// Define the validation schema
 const participantSchema = z.object({
   name: z.string().min(1, "Name is required"),
   height: z.string().min(1, "Height is required"),
@@ -105,6 +103,7 @@ export default function EnrollParticipantPage() {
       }
     },
     onError: (error) => {
+      // Log the error to the console to have observability in New Relic, Datadog, etc.
       console.error('Enrollment failed:', error)
       alert('Enrollment failed due to an internal error')
     }
