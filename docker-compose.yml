@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://api:3001  # Internal Docker network URL
+      - API_URL=http://api:3001              # Internal Docker network URL
+    depends_on:
+      - api
+    networks:
+      - app_network
+
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - CORS_ORIGIN=http://localhost:3000    # Allow requests from local web
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
