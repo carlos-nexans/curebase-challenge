@@ -19,7 +19,7 @@ const TRIALS_QUERY = `
 
 export default function TrialsPage() {
   const { data, isLoading, error } = useQuery<{trials: Trial[]}>({
-    queryKey: ['trials'],
+    queryKey: ['trials:full'],
     queryFn: () => graphqlClient.request(TRIALS_QUERY)
   })
 

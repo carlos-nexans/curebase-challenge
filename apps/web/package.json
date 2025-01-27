@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "@repo/api": "*",
     "@repo/ui": "*",
     "@tanstack/react-query": "^5.64.2",
@@ -19,7 +20,9 @@
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.14"
+    "react-hook-form": "^7.54.2",
+    "styled-components": "^6.1.14",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

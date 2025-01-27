@@ -24,6 +24,12 @@ type Participant {
   trial: Trial!
 }
 
+type EnrollmentResult {
+  participant: Participant
+  isEligible: Boolean!
+  ineligibilityReasons: [String!]!
+}
+
 type Mutation {
   createTrial(name: String!): Trial!
   createParticipant(
@@ -33,5 +39,5 @@ type Mutation {
     hasDiabetes: Boolean!
     hadCovid: Boolean!
     trialId: Int!
-  ): Participant!
+  ): EnrollmentResult!
 }

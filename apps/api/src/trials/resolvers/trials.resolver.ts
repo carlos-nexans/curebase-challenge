@@ -5,6 +5,7 @@ import {
   ResolveField,
   Args,
   Info,
+  Mutation,
 } from '@nestjs/graphql';
 import { TrialsService } from '../services/trials.service';
 import { Trial } from 'src/graphql';
@@ -13,6 +14,11 @@ import { GraphQLResolveInfo } from 'graphql';
 @Resolver('Trial')
 export class TrialsResolver {
   constructor(private trialsService: TrialsService) {}
+
+  @Mutation('createTrial')
+  async createTrial(@Args('name') name: string) {
+    return this.trialsService.createTrial({ name });
+  }
 
   @Query('trials')
   async getTrials(@Info() info: GraphQLResolveInfo) {
