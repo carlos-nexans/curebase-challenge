@@ -14,6 +14,18 @@
   - [Using Docker](#using-docker)
   - [Development](#development)
 
+## Scaffolding
+
+```
+.
+├── apps
+│   ├── api                 # NestJS backend application
+│   └── web                 # Next.js frontend application
+└── packages
+    ├── ui                  # Shared UI components
+    └── eslint-config       # Common ESLint configuration
+```
+
 ## Architectural Decisions
 
 ### Re-scaffolding with Turborepo
@@ -118,3 +130,15 @@ npm run dev
 Navigate to http://localhost:3000 to view the application.
 
 Navigate to http://localhost:3001/graphql to view the GraphQL playground.
+
+## Testing
+
+```bash
+npm run test
+```
+
+## Linting
+
+```bash
+npm run lint
+```

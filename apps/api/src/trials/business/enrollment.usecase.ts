@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ParticipantsService } from '../services/participants.service';
 import { TrialsService } from '../services/trials.service';
+import { Participant } from 'src/graphql';
 
 interface EnrollParticipantDto {
   trialId: number;
@@ -12,7 +13,7 @@ interface EnrollParticipantDto {
 }
 
 interface EnrollmentResult {
-  participant: any;
+  participant: Omit<Participant, 'trial'> | null;
   isEligible: boolean;
   ineligibilityReasons: string[];
 }
