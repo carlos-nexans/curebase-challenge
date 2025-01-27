@@ -3,7 +3,7 @@ import { Lato } from 'next/font/google'
 import StyledJsxRegistry from "./registry";
 import NavigationHeader from './header';
 import { PageContent } from "@repo/ui/containers";
-import QueryClientProvider from "./queryClient";
+import QueryClientProvider from "./queryProvider";
 
 const lato = Lato({
   subsets: ['latin'],

@@ -156,7 +156,7 @@ describe('Enrollment (e2e)', () => {
       });
   });
 
-  it.only('should fail when trial is not found', () => {
+  it('should fail when trial is not found', () => {
     const nonExistentTrialId = 99999;
     
     return request(app.getHttpServer())

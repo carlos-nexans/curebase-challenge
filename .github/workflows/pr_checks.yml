@@ -7,7 +7,8 @@ on:
     # Removing the branches filter makes it run on all PRs
     
 jobs:
-  test:
+  api-test:
+    name: API Tests
     runs-on: ubuntu-latest
     env:
       MIN_COVERAGE: 85
@@ -30,6 +31,7 @@ jobs:
         npm test -- --coverage --coverageThreshold='{"global":{"lines":${{ env.MIN_COVERAGE }}}}'
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     
     steps:
@@ -56,3 +58,23 @@ jobs:
     - name: Run Web lint
       working-directory: apps/web
       run: npm run lint
+
+  web-test:
+    name: Web Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: 'apps/web/package.json'
+
+    - name: Install dependencies and run tests
+      working-directory: apps/web
+      run: |
+        npm install
+        npm run test:cov
