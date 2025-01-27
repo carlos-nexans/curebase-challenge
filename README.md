@@ -1,5 +1,7 @@
 # Curebase Technical Assessment - Sr. Engineer
 
+[![PR Checks](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml/badge.svg?branch=main)](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -46,7 +48,7 @@ I retained NestJS for the backend and GraphQL for API communication due to their
 
 - NestJS provides a modular and scalable architecture, ideal for implementing complex business logic.
 
-- GraphQL is well-suited for the application’s needs, offering:
+- GraphQL is well-suited for the application's needs, offering:
 
   - Flexible querying capabilities.
 
