@@ -110,11 +110,10 @@ describe('ParticipantsPage', () => {
     render(<ParticipantsPage />, { wrapper: createWrapper() })
 
     // Wait for loading to complete
-    await screen.findByText('Participants')
+    await screen.findByText('No participants enrolled yet')
 
-    // Verify the list is empty (no participant names visible)
-    const participantElements = screen.queryAllByRole('listitem')
-    expect(participantElements).toHaveLength(0)
+    // Verify empty state message
+    expect(screen.getByText('No participants enrolled yet')).toBeInTheDocument()
 
     // Verify "Enroll a participant" button is still visible
     expect(screen.getByText('Enroll a participant')).toBeInTheDocument()

@@ -61,6 +61,15 @@ export default function ParticipantsPage() {
     </Card>
   )
 
+  if (!data?.participants.length) return (
+    <Card>
+      <ParticipantsHeader />
+      <CardContent>
+        <Text>No participants enrolled yet</Text>
+      </CardContent>
+    </Card>
+  )
+
   return (
     <Card>
       <ParticipantsHeader />
