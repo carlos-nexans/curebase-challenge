@@ -5,12 +5,14 @@ services:
     build:
       context: .
       dockerfile: web.Dockerfile
+      args:
+        - NEXT_PUBLIC_GRAPHQL_URL=http://api:3001/graphql
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://api:3001  # Internal Docker network URL
-      - API_URL=http://api:3001              # Internal Docker network URL
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - API_URL=http://api:3001
     depends_on:
       - api
     networks:
