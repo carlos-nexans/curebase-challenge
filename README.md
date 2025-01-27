@@ -5,6 +5,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Scaffolding](#scaffolding)
 - [Architectural Decisions](#architectural-decisions)
   - [Re-scaffolding with Turborepo](#re-scaffolding-with-turborepo)
   - [Frontend: Migrated to Next.js](#frontend-migrated-to-nextjs)
@@ -17,6 +18,14 @@
   - [Unit tests](#unit-tests)
   - [Integration tests](#integration-tests)
 - [Linting](#linting)
+
+## Introduction
+
+This is a technical assessment for the Sr. Engineer position at Curebase. The assessment is a full-stack application built with Next.js, NestJS, and GraphQL. The application is designed to allow users to enroll in trials and view a list of participants.
+
+The frontend application is accessible at https://curebase.carlosnexans.com.
+
+The GraphQL API is accessible at https://api-curebase.carlosnexans.com/graphql
 
 ## Scaffolding
 
