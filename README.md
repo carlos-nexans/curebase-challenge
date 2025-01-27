@@ -105,7 +105,7 @@ Backend:
 ### Using Docker
 
 ```bash
-docker compose up
+docker-compose up
 ```
 
 Navigate to http://localhost:3000 to view the application.
