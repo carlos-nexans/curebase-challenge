@@ -17,6 +17,14 @@
       "cache": false,
       "persistent": true
     },
+    "test": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
     "apps/api": {
       "env": [
         "CORS_ORIGIN",

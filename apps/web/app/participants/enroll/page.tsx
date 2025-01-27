@@ -80,7 +80,7 @@ export default function EnrollParticipantPage() {
 
   const router = useRouter()
 
-  const { data: trialsResponse, isLoading, error } = useQuery<{trials: Trial[]}>({
+  const { data: trialsResponse, isLoading } = useQuery<{trials: Trial[]}>({
     queryKey: ['trials:slim'],
     queryFn: () => graphqlClient.request(TRIALS_QUERY)
   })

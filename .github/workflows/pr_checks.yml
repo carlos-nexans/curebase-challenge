@@ -1,4 +1,4 @@
-name: PR Checks
+name: Test and Lint
 
 on:
   push:
