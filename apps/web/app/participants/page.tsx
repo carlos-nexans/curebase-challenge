@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
+import { Card, CardContent, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import { PrimaryButton } from "@repo/ui/buttons"
 import Image from "next/image"
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { Participant } from '@repo/api/graphql'
 import { graphqlClient } from "../queryClient"
+import Link from "next/link"
 
 const GET_PARTICIPANTS = gql`
   query GetParticipants {
@@ -19,25 +20,50 @@ const GET_PARTICIPANTS = gql`
   }
 `
 
+function ParticipantsHeader() {
+  return (
+    <CardHeader>
+      <Heading1>Participants</Heading1>
+      <Link href="/participants/enroll">
+        <PrimaryButton>
+          Enroll a participant
+        </PrimaryButton>
+      </Link>
+    </CardHeader>
+  )
+}
+
 export default function ParticipantsPage() {
   const { data, isLoading, error } = useQuery<{participants: Participant[]}>({
     queryKey: ['participants'],
     queryFn: async () => {
       return await graphqlClient.request(GET_PARTICIPANTS)
-    }
+    },
+    refetchInterval: 30000,
+    staleTime: 10000,
   })
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error loading participants</div>
+  if (isLoading) return (
+    <Card>
+      <ParticipantsHeader />
+      <CardContent>
+        <Text>Loading...</Text>
+      </CardContent>
+    </Card>
+  )
+
+  if (error) return (
+    <Card>
+      <ParticipantsHeader />
+      <CardContent>
+        <Text>Error loading participants</Text>
+      </CardContent>
+    </Card>
+  )
 
   return (
     <Card>
-      <CardHeader>
-        <Heading1>Participants</Heading1>
-        <PrimaryButton onClick={() => (window.location.href = "/participants/enroll")}>
-          Enroll a participant
-        </PrimaryButton>
-      </CardHeader>
+      <ParticipantsHeader />
       <List>
         {data?.participants.map((participant) => (
           <ListItem key={participant.id}>

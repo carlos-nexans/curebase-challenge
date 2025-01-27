@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
+import { Card, CardContent, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import Image from "next/image"
 import { useQuery } from '@tanstack/react-query'
@@ -17,24 +17,47 @@ const TRIALS_QUERY = `
   }
 `
 
+function TrialsHeader() {
+  return (
+    <CardHeader>
+      <Heading1>Trials</Heading1>
+    </CardHeader>
+  )
+}
+
 export default function TrialsPage() {
   const { data, isLoading, error } = useQuery<{trials: Trial[]}>({
     queryKey: ['trials:full'],
-    queryFn: () => graphqlClient.request(TRIALS_QUERY)
+    queryFn: () => graphqlClient.request(TRIALS_QUERY),
+    refetchInterval: 30000,
+    staleTime: 10000,
   })
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return (
+    <Card>
+      <TrialsHeader />
+      <CardContent>
+        <Text>Loading...</Text>
+      </CardContent>
+    </Card>
+  )
 
-  if (error) return <div>Error loading trials</div>
+  if (error) return (
+    <Card>
+      <TrialsHeader />
+      <CardContent>
+        <Text>Error loading trials</Text>
+      </CardContent>
+    </Card>
+  )
 
   const trials = data?.trials ?? []
 
   return (
     <Card>
-      <CardHeader>
-        <Heading1>Trials</Heading1>
-      </CardHeader>
+      <TrialsHeader />
       <List>
+        {trials.length === 0 && <Text>No trials found</Text>}
         {trials.map((trial) => (
           <ListItem key={trial.id}>
             <ListItemContent>

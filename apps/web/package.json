@@ -10,7 +10,8 @@
     "lint": "eslint \"app/**/*.tsx\" --fix",
     "check-types": "tsc --noEmit",
     "test": "vitest --watch=false",
-    "test:cov": "vitest --coverage --watch=false"
+    "test:cov": "vitest --coverage --watch=false",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
