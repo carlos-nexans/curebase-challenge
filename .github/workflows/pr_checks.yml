@@ -1,4 +1,4 @@
-name: Run Tests
+name: PR Checks
 
 on:
   push:
@@ -9,7 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+      MIN_COVERAGE: 85
+      
     steps:
     - uses: actions/checkout@v4
 
@@ -25,4 +27,32 @@ jobs:
       run: |
         npm install
         npx prisma generate
-        npm test
+        npm test -- --coverage --coverageThreshold='{"global":{"lines":${{ env.MIN_COVERAGE }}}}'
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install API dependencies
+      working-directory: apps/api
+      run: npm install
+
+    - name: Install Web dependencies
+      working-directory: apps/web
+      run: npm install
+
+    - name: Run API lint
+      working-directory: apps/api
+      run: npm run lint
+
+    - name: Run Web lint
+      working-directory: apps/web
+      run: npm run lint
