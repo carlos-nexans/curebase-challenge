@@ -13,6 +13,10 @@
 - [Running Instructions](#running-instructions)
   - [Using Docker](#using-docker)
   - [Development](#development)
+- [Testing](#testing)
+  - [Unit tests](#unit-tests)
+  - [Integration tests](#integration-tests)
+- [Linting](#linting)
 
 ## Scaffolding
 
@@ -38,13 +42,11 @@ I re-scaffolded the application using Turborepo for the following benefits:
 
 - Ease of Dependency Management: With clearly defined workspaces, managing shared dependencies is straightforward, reducing potential conflicts.
 
-This decision improves maintainability and long-term scalability of the project.
-
 ### Frontend: Migrated to Next.js
 
 I chose Next.js over Create React App (CRA) due to its extensibility, community support, and alignment with modern web development standards:
 
-Key Advantages:
+**Key Advantages:**
 
 - Full-Stack Support: Next.js enables seamless server-side functionality within the same codebase, enhancing developer experience and productivity.
 
@@ -52,7 +54,7 @@ Key Advantages:
 
 - Performance Enhancements: Server Components improves percieved performance to the user. Streaming and Code Splitting allows for optimal performance and user experience.
 
-- Adoption and Community: As noted in the State of JS survey, most of the React community has moved to metaframeworks. Next.js is the most widely adopted metaframework, ensuring better support, tooling, and resources. This migration ensures the application is built on a future-proof, flexible, and robust foundation.
+- Adoption and Community: As noted in the State of JS survey, most of the React community has moved to metaframeworks. Next.js is the most widely adopted metaframework, ensuring better support, tooling, and resources.
 
 ### Backend: NestJS and GraphQL
 
@@ -74,23 +76,19 @@ I continued using Styled Components for styling the frontend, even though they d
 
 - Future-Proofing: Styled Components are likely to adopt server components support in the future, aligning with the React team's direction.
 
-- Developer Experience: Styled Components offer a clean, intuitive syntax for creating scoped, dynamic styles.
-
-By making this choice, the codebase remains consistent.
-
 ### Key Implementation Details
 
-Frontend:
+**Frontend:**
 
 - Framework: Next.js for responsive and performant frontend development.
 
 - Styling: Styled Components for modular and dynamic styling.
 
-- Validation: Client-side form validations to ensure data integrity before API calls.
+- Validation: Client-side form validations with Zod and React Hook Form. This ensures data integrity before API calls using safe declarative approach.
 
 - Modular: Components are modular and reusable, ensuring a clean and maintainable codebase.
 
-Backend:
+**Backend:**
 
 - Framework: NestJS for building a scalable backend.
 
@@ -114,11 +112,22 @@ Navigate to http://localhost:3001/graphql to view the GraphQL playground.
 
 ### Development
 
-
 Install dependencies
 
 ```bash
 npm install
+```
+
+Start postgres database
+
+```
+docker-compose up -d db
+```
+
+Run migrations and seed the database
+```
+npm run db:migrate
+npm run db:seed
 ```
 
 Run the development server
@@ -133,8 +142,24 @@ Navigate to http://localhost:3001/graphql to view the GraphQL playground.
 
 ## Testing
 
+### Unit tests
+
 ```bash
-npm run test
+npm run test:unit
+```
+
+### Integration tests
+
+Start the database
+
+```
+docker-compose up -d db
+```
+
+Run integration tests
+
+```bash
+npm run test:integration
 ```
 
 ## Linting

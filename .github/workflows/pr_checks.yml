@@ -10,6 +10,10 @@ jobs:
   api-test:
     name: API Tests
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.18
+        options: --privileged # Enables Testcontainers to run Docker-in-Docker
     env:
       MIN_COVERAGE: 85
       
@@ -26,7 +30,7 @@ jobs:
     - name: Start database and run migrations
       working-directory: apps/api
       run: |
-        docker-compose up -d db
+        docker compose up -d db
         npm install
         npx prisma generate
         npm run db:migrate
