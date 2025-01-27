@@ -4,27 +4,25 @@ import styled from "styled-components"
 
 export const Card = styled.div`
   background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
 `
 
 export const CardHeader = styled.div`
-  padding: 1.25rem 1rem;
+  padding: 1.25rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
+`
 
-  @media (min-width: 640px) {
-    padding: 1.25rem 1.5rem;
+export const ResponsiveCardHeader = styled(CardHeader)`
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 16px;
+    margin: 0px;
   }
 `
 
 export const CardContent = styled.div`
-  padding: 1.25rem 1rem;
-
-  @media (min-width: 640px) {
-    padding: 1.25rem 1.5rem;
-  }
 `
 
 export const List = styled.ul`
@@ -33,23 +31,23 @@ export const List = styled.ul`
 `
 
 export const ListItem = styled.li`
-  &:hover {
-    background-color: var(--color-background);
-  }
+  padding: 21px 0;
+  border-bottom: 1px solid #e5e7eb;
 `
 
 export const ListItemContent = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem;
-  
-  @media (min-width: 640px) {
-    padding: 1rem 1.5rem;
-  }
+  margin: 5px 0;
+  padding-bottom: 21px 0;
 `
 
 export const PageContent = styled.main`
-  padding: 1.25rem 1rem;
-  max-width: 80rem;
+  padding: 20px 0;
+  max-width: 800px;
   margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    padding: 20px;
+  }
 `

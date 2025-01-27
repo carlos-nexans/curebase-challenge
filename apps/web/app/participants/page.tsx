@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
+import { Card, CardContent, ResponsiveCardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import { PrimaryButton } from "@repo/ui/buttons"
 import Image from "next/image"
@@ -20,16 +20,18 @@ const GET_PARTICIPANTS = gql`
   }
 `
 
+
+
 function ParticipantsHeader() {
   return (
-    <CardHeader>
+    <ResponsiveCardHeader>
       <Heading1>Participants</Heading1>
       <Link href="/participants/enroll">
         <PrimaryButton>
           Enroll a participant
         </PrimaryButton>
       </Link>
-    </CardHeader>
+    </ResponsiveCardHeader>
   )
 }
 
@@ -77,23 +79,24 @@ export default function ParticipantsPage() {
         {data?.participants.map((participant) => (
           <ListItem key={participant.id}>
             <ListItemContent>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <Text style={{ fontWeight: 500, color: "#0c0c0d" }}>{participant.name}</Text>
-                  <Image 
-                    src="/assets/svg/chevron-right.svg" 
-                    alt="Chevron right" 
-                    width={5} 
-                    height={13}
-                  />
+              <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Text style={{ fontWeight: 400, color: "#0C0C0DE0" }}>{participant.name}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: 400, color: "#0C0C0D7A" }}>
+                    {/* Added year to date format for better readability */}
+                    {`Enrolled in ${new Date(participant.enrolledAt).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}`}
+                  </Text>
                 </div>
-                <Text>
-                  {`Enrolled in ${new Date(participant.enrolledAt).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  })}`}
-                </Text>
+                <Image 
+                  src="/assets/svg/chevron-right.svg" 
+                  alt="Chevron right" 
+                  width={5} 
+                  height={13}
+                />
               </div>
             </ListItemContent>
           </ListItem>

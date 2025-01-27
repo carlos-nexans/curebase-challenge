@@ -3,22 +3,22 @@
 import Link from "next/link"
 import Image from "next/image"
 import styled from "styled-components"
+import { usePathname } from "next/navigation"
 
 const HeaderWrapper = styled.header`
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--color-background);
+  margin-bottom: 10px;
 `
 
 const HeaderContent = styled.div`
-  margin: 0 auto;
-  padding: 1rem;
-  
-  @media (min-width: 640px) {
-    padding: 1.5rem;
-  }
-  
-  @media (min-width: 1024px) {
-    padding: 2rem;
+  display: flex;
+  padding: 34px 20px;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    height: 148px;
+    padding: 34px 60px;
   }
 `
 
@@ -26,9 +26,10 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   height: auto;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
+  width: 100%;
   
   @media (min-width: 768px) {
     flex-direction: row;
@@ -40,7 +41,7 @@ const Nav = styled.nav`
 
 const NavLink = styled(Link)`
   color: #1c565a;
-  font-size: 0.875rem;
+  font-size: 16px;
   padding: 0.5rem;
   transition: color 150ms ease-in-out;
 
@@ -51,9 +52,11 @@ const NavLink = styled(Link)`
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 16px;
   flex-direction: column;
   align-items: center;
+  font-size: 16px;
+  font-weight: 700;
   
   @media (min-width: 768px) {
     flex-direction: row;
@@ -72,6 +75,10 @@ interface NavigationHeaderProps {
 }
 
 const NavigationHeader: React.FC<NavigationHeaderProps> = ({ logoSrc, logoAlt, navigationItems }) => {
+  const pathname = usePathname()
+
+  const isActive = (href: string) => pathname.match(href)
+
   return (
     <HeaderWrapper>
       <HeaderContent>
@@ -87,7 +94,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({ logoSrc, logoAlt, n
           </Link>
           <NavLinks>
             {navigationItems.map((item) => (
-              <NavLink key={item.href} href={item.href}>
+              <NavLink key={item.href} href={item.href} style={{ color: isActive(item.href) ? 'var(--color-primary)' : '#0C0C0D7A'}}>
                 {item.label}
               </NavLink>
             ))}

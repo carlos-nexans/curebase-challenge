@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, Mock, afterEach } from 'vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import EligibilityResultPage from './page'
 import { useRouter, useParams } from 'next/navigation';
 

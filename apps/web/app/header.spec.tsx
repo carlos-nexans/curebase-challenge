@@ -1,14 +1,20 @@
-import { describe, it, expect, afterEach, vi } from 'vitest'
+import { describe, it, expect, afterEach, vi, Mock } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import NavigationHeader from './header'
+import { usePathname } from 'next/navigation'
 
 vi.mock('next/image', () => ({
   default: (props: any) => <img {...props} />
 }))
 
+vi.mock('next/navigation', () => ({
+  usePathname: vi.fn()
+}))
+
 describe('NavigationHeader', () => {
   afterEach(() => {
     cleanup()
+    vi.clearAllMocks()
   })
 
   const mockNavigationItems = [
@@ -18,6 +24,7 @@ describe('NavigationHeader', () => {
   ]
 
   it('renders the logo with correct props', () => {
+    (usePathname as Mock).mockReturnValue('/participants')
     render(
       <NavigationHeader 
         logoSrc="/test-logo.svg"
@@ -32,6 +39,7 @@ describe('NavigationHeader', () => {
   })
 
   it('renders all navigation items correctly', () => {
+    (usePathname as Mock).mockReturnValue('/participants')
     render(
       <NavigationHeader 
         logoSrc="/test-logo.svg"
@@ -48,6 +56,7 @@ describe('NavigationHeader', () => {
   })
 
   it('uses placeholder logo when logoSrc is not provided', () => {
+    (usePathname as Mock).mockReturnValue('/participants')
     render(
       <NavigationHeader 
         logoSrc=""

@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation"
 
 const CenteredCard = styled(Card)`
   max-width: 400px;
-  margin: 2rem auto;
+  margin: 172px auto 0 auto;
   text-align: center;
 `
 
@@ -21,15 +21,15 @@ const IconWrapper = styled.div<{ $isEligible: boolean }>`
   height: 80px;
   border-radius: 50%;
   background-color: ${(props) => (props.$isEligible ? "#e6f6f4" : "#fde8e8")};
-  margin-bottom: 1rem;
+  margin-bottom: 30px;
 `
 
 const EligibilityHeading = styled(Heading1)`
-  margin-bottom: 0.5rem;
+  margin-bottom: 7px;
 `
 
 const EligibilityText = styled(Text)`
-  margin-bottom: 1.5rem;
+  margin-bottom: 30px;
 `
 
 interface StatusProps {

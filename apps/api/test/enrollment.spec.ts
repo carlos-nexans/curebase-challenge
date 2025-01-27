@@ -39,7 +39,6 @@ describe('Enrollment (e2e)', () => {
   });
 
   it('should successfully enroll an eligible participant', () => {
-    // Height: 70 inches (5'10"), Weight: 170 lbs => BMI ≈ 24.4 (within range)
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -72,7 +71,6 @@ describe('Enrollment (e2e)', () => {
   });
 
   it('should mark as ineligible due to low BMI', () => {
-    // Height: 70 inches (5'10"), Weight: 120 lbs => BMI ≈ 17.2 (too low)
     return request(app.getHttpServer())
       .post('/graphql')
       .send({

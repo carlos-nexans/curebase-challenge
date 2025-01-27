@@ -10,7 +10,6 @@ describe('EnrollmentUseCase', () => {
   let trialsService: jest.Mocked<TrialsService>;
 
   beforeEach(async () => {
-    // Create mock services
     const mockParticipantsService = {
       createParticipant: jest.fn(),
     };
@@ -40,8 +39,8 @@ describe('EnrollmentUseCase', () => {
 
   const validParticipantData = {
     name: 'John Doe',
-    height: 70, // 5'10"
-    weight: 170, // BMI ≈ 24.4
+    height: 70,
+    weight: 170,
     hasDiabetes: true,
     hadCovid: false,
     trialId: 1,
@@ -82,7 +81,7 @@ describe('EnrollmentUseCase', () => {
       // Arrange
       const lowBmiData = {
         ...validParticipantData,
-        weight: 120, // BMI ≈ 17.2 (too low)
+        weight: 120,
       };
       trialsService.getTrial.mockResolvedValue({ id: 1, name: 'Test Trial', participants: [] });
       participantsService.createParticipant.mockResolvedValue({
@@ -145,7 +144,7 @@ describe('EnrollmentUseCase', () => {
       // Arrange
       const highBmiData = {
         ...validParticipantData,
-        weight: 250, // BMI ≈ 35.9 (too high)
+        weight: 250,
       };
       trialsService.getTrial.mockResolvedValue({ id: 1, name: 'Test Trial', participants: [] });
       participantsService.createParticipant.mockResolvedValue({
