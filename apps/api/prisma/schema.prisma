@@ -19,6 +19,7 @@ model Trial {
 model Participant {
   id          Int      @id @default(autoincrement())
   name        String
+  enrolledAt  DateTime @default(now())
   height      Float
   weight      Float
   hasDiabetes Boolean

@@ -3,6 +3,7 @@ import { Lato } from 'next/font/google'
 import StyledJsxRegistry from "./registry";
 import NavigationHeader from './header';
 import { PageContent } from "@repo/ui/containers";
+import QueryClientProvider from "./queryClient";
 
 const lato = Lato({
   subsets: ['latin'],
@@ -30,7 +31,9 @@ export default function RootLayout({
             logoAlt="Curebase"
           />
           <PageContent>
-            {children}
+            <QueryClientProvider>
+              {children}
+            </QueryClientProvider>
           </PageContent>
         </StyledJsxRegistry>
       </body>

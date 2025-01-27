@@ -27,15 +27,22 @@ export interface Participant {
     name: string;
     height: number;
     weight: number;
+    enrolledAt: Date;
     hasDiabetes: boolean;
     hadCovid: boolean;
     trialId: number;
     trial: Trial;
 }
 
+export interface EnrollmentResult {
+    participant?: Nullable<Participant>;
+    isEligible: boolean;
+    ineligibilityReasons: string[];
+}
+
 export interface IMutation {
     createTrial(name: string): Trial | Promise<Trial>;
-    createParticipant(name: string, height: number, weight: number, hasDiabetes: boolean, hadCovid: boolean, trialId: number): Participant | Promise<Participant>;
+    createParticipant(name: string, height: number, weight: number, hasDiabetes: boolean, hadCovid: boolean, trialId: number): EnrollmentResult | Promise<EnrollmentResult>;
 }
 
 type Nullable<T> = T | null;

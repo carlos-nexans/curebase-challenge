@@ -16,6 +16,13 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "apps/api": {
+      "env": [
+        "CORS_ORIGIN",
+        "PORT",
+        "NODE_ENV"
+      ]
     }
   }
 }

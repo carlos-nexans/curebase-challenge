@@ -17,10 +17,17 @@ type Participant {
   name: String!
   height: Float!
   weight: Float!
+  enrolledAt: Date!
   hasDiabetes: Boolean!
   hadCovid: Boolean!
   trialId: Int!
   trial: Trial!
+}
+
+type EnrollmentResult {
+  participant: Participant
+  isEligible: Boolean!
+  ineligibilityReasons: [String!]!
 }
 
 type Mutation {
@@ -32,5 +39,5 @@ type Mutation {
     hasDiabetes: Boolean!
     hadCovid: Boolean!
     trialId: Int!
-  ): Participant!
+  ): EnrollmentResult!
 }

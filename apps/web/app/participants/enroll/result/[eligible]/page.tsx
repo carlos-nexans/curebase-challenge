@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
 import { PrimaryButton } from "@repo/ui/buttons"
 import { Card, CardContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import styled from "styled-components"
 import Image from "next/image"
+import { useParams, useRouter } from "next/navigation"
 
 const CenteredCard = styled(Card)`
   max-width: 400px;
@@ -65,11 +65,19 @@ function Status({ isEligible }: StatusProps) {
 }
 
 export default function EligibilityResultPage() {
+  const params = useParams()
+  const router = useRouter()
+  const isEligible = params.eligible === 'eligible'
+
+  const handleOkClick = () => {
+    router.push('/participants')
+  }
+
   return (
     <CenteredCard>
       <CardContent>
-        <Status isEligible />
-        <PrimaryButton>OK</PrimaryButton>
+        <Status isEligible={isEligible} />
+        <PrimaryButton onClick={handleOkClick}>OK</PrimaryButton>
       </CardContent>
     </CenteredCard>
   )

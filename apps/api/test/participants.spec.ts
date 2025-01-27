@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { PrismaService } from '../src/common/prisma.service';
 
-describe('Trials (e2e)', () => {
+describe('Participants (e2e)', () => {
   let app: INestApplication;
   let prismaService: PrismaService;
 
@@ -23,42 +23,48 @@ describe('Trials (e2e)', () => {
     await app.close();
   });
 
-  it('should fetch all trials without participants', () => {
+  it('should fetch all participants', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
         query: `
           query {
-            trials {
+            participants {
               id
               name
+              height
+              weight
+              hasDiabetes
+              hadCovid
+              trialId
             }
           }
         `,
       })
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.trials).toBeDefined();
-        expect(Array.isArray(res.body.data.trials)).toBeTruthy();
+        expect(res.body.data.participants).toBeDefined();
+        expect(Array.isArray(res.body.data.participants)).toBeTruthy();
       });
   });
 
-  it('should fetch all trials with participants', () => {
+  it('should fetch participant by id', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
         query: `
           query {
-            trials {
+            participant(id: 1) {
               id
               name
-              participants {
+              height
+              weight
+              hasDiabetes
+              hadCovid
+              trialId
+              trial {
                 id
                 name
-                height
-                weight
-                hasDiabetes
-                hadCovid
               }
             }
           }
@@ -66,46 +72,23 @@ describe('Trials (e2e)', () => {
       })
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.trials).toBeDefined();
-        expect(Array.isArray(res.body.data.trials)).toBeTruthy();
-        expect(
-          Array.isArray(res.body.data.trials[0]?.participants),
-        ).toBeTruthy();
+        expect(res.body.data.participant).toBeDefined();
+        expect(res.body.data.participant.id).toBe(1);
+        expect(res.body.data.participant.trial).toBeDefined();
       });
   });
 
-  it('should fetch all trials with participantCount', () => {
+  it('should fetch participants with trial information', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
         query: `
           query {
-            trials {
+            participants {
               id
               name
-              participantCount
-            }
-          }
-        `,
-      })
-      .expect(200)
-      .expect((res) => {
-        expect(res.body.data.trials).toBeDefined();
-        expect(Array.isArray(res.body.data.trials)).toBeTruthy();
-        expect(typeof res.body.data.trials[0]?.participantCount).toBe('number');
-      });
-  });
-
-  it('should fetch trial by id', () => {
-    return request(app.getHttpServer())
-      .post('/graphql')
-      .send({
-        query: `
-          query {
-            trial(id: 1) {
-              id
-              name
-              participants {
+              trial {
+                id
                 name
               }
             }
@@ -114,9 +97,41 @@ describe('Trials (e2e)', () => {
       })
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.trial).toBeDefined();
-        expect(res.body.data.trial.id).toBe(1);
-        expect(Array.isArray(res.body.data.trial.participants)).toBeTruthy();
+        expect(res.body.data.participants).toBeDefined();
+        expect(Array.isArray(res.body.data.participants)).toBeTruthy();
+        if (res.body.data.participants.length > 0) {
+          expect(res.body.data.participants[0].trial).toBeDefined();
+        }
+      });
+  });
+
+  it('should reject queries exceeding maximum depth', () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          query {
+            participants {
+              id
+              trial {
+                id
+                participants {
+                  id
+                }
+              }
+            }
+          }
+        `,
+      })
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.errors).toBeDefined();
+        expect(res.body.errors[0].message).toContain(
+          'exceeds maximum operation depth of 2',
+        );
+        expect(res.body.errors[0].extensions.code).toBe(
+          'GRAPHQL_VALIDATION_FAILED',
+        );
       });
   });
 });

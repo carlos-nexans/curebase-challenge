@@ -13,5 +13,6 @@ CREATE TABLE "Participant" (
     "hasDiabetes" BOOLEAN NOT NULL,
     "hadCovid" BOOLEAN NOT NULL,
     "trialId" INTEGER NOT NULL,
+    "enrolledAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY ("trialId") REFERENCES "Trial"("id")
 );
