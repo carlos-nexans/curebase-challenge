@@ -1,5 +1,5 @@
 # ---- Build Stage ----
-FROM node:20 AS builder
+FROM node:22 AS builder
 
 # Set working directory for the monorepo root
 WORKDIR /app
@@ -17,7 +17,7 @@ RUN npm run prisma
 RUN cd /app && npm run build --filter=api
 
 # ---- Production Stage ----
-FROM node:20-alpine3.20
+FROM node:22-alpine3.20
 
 # Set working directory to api folder
 WORKDIR /app
