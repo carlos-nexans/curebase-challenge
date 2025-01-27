@@ -48,4 +48,13 @@ export const nextJsConfig = [
       "react/react-in-jsx-scope": "off",
     },
   },
+  {
+    files: ['**/*.spec.ts', '**/*.spec.tsx'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react/display-name': 'off',
+      '@next/next/no-img-element': 'off',
+    }
+  }
 ];
+

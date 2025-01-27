@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent, CardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
+import { Card, CardContent, ResponsiveCardHeader, List, ListItem, ListItemContent } from "@repo/ui/containers"
 import { Heading1, Text } from "@repo/ui/typography"
 import Image from "next/image"
 import { useQuery } from '@tanstack/react-query'
@@ -19,9 +19,9 @@ const TRIALS_QUERY = `
 
 function TrialsHeader() {
   return (
-    <CardHeader>
+    <ResponsiveCardHeader>
       <Heading1>Trials</Heading1>
-    </CardHeader>
+    </ResponsiveCardHeader>
   )
 }
 
@@ -61,17 +61,19 @@ export default function TrialsPage() {
         {trials.map((trial) => (
           <ListItem key={trial.id}>
             <ListItemContent>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <Text style={{ fontWeight: 500, color: "#0c0c0d" }}>{trial.name}</Text>
-                  <Image 
-                    src="/assets/svg/chevron-right.svg" 
-                    alt="Chevron right" 
-                    width={5} 
-                    height={13}
-                  />
+              <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Text style={{ fontWeight: 400, color: "#0C0C0DE0" }}>{trial.name}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: 400, color: "#0C0C0D7A" }}>
+                    {trial.participantCount} participants
+                  </Text>
                 </div>
-                <Text>{trial.participantCount} participants</Text>
+                <Image 
+                  src="/assets/svg/chevron-right.svg" 
+                  alt="Chevron right" 
+                  width={5} 
+                  height={13}
+                />
               </div>
             </ListItemContent>
           </ListItem>

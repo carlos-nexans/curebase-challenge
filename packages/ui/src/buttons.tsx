@@ -23,10 +23,17 @@ export const Button = styled.button`
 export const PrimaryButton = styled(Button)`
   background-color: var(--color-primary);
   color: white;
+  padding: 10px 16px;
+  border-radius: 4px;
+  height: 2.5rem;
+  font-weight: 700;
+  font-size: 14px;
+
 
   &:hover:not(:disabled) {
     background-color: var(--color-primary-hover);
   }
+    
 `
 
 export const SecondaryButton = styled(Button)`

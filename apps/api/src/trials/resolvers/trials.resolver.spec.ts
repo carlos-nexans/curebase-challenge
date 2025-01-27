@@ -7,7 +7,6 @@ describe('TrialsResolver', () => {
   let resolver: TrialsResolver;
   let trialsService: jest.Mocked<TrialsService>;
 
-  // Mock data
   const mockTrials = [
     { id: 1, name: 'Trial 1' },
     { id: 2, name: 'Trial 2' },

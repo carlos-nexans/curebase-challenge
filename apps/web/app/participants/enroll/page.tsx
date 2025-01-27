@@ -5,12 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { FormGroup, Label, Input, Select, Checkbox } from "@repo/ui/forms"
 import { PrimaryButton } from "@repo/ui/buttons"
-import { Card, CardHeader, CardContent } from "@repo/ui/containers"
+import { Card, CardContent, ResponsiveCardHeader } from "@repo/ui/containers"
 import { Heading1, ErrorText } from "@repo/ui/typography"
 import { graphqlClient } from "../../queryClient"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { EnrollmentResult, Trial } from "@repo/api/graphql"
 import { useRouter } from "next/navigation"
+import styled from "styled-components"
 
 const TRIALS_QUERY = `
   query {
@@ -49,15 +50,27 @@ const CREATE_PARTICIPANT_MUTATION = `
 `
 
 const participantSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  height: z.string().min(1, "Height is required"),
-  weight: z.string().min(1, "Weight is required"),
+  name: z.string().min(1, "This is a required field"),
+  height: z.string().min(1, "This is a required field"),
+  weight: z.string().min(1, "This is a required field"),
   hasDiabetes: z.boolean(),
   hadCovid: z.boolean(),
-  trial: z.string().min(1, "Trial selection is required"),
+  trial: z.string().min(1, "This is a required field"),
 })
 
 type ParticipantFormData = z.infer<typeof participantSchema>
+
+const FloatingErrorText = styled(ErrorText)`
+  position: absolute;
+  bottom: -27px;
+`
+
+const ButtonContainer = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: flex-end;
+  }
+`
 
 export default function EnrollParticipantPage() {
   const {
@@ -115,38 +128,38 @@ export default function EnrollParticipantPage() {
 
   return (
     <Card>
-      <CardHeader>
+      <ResponsiveCardHeader>
         <Heading1>Enroll a participant</Heading1>
-      </CardHeader>
+      </ResponsiveCardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
+          <FormGroup style={{ maxWidth: 400 }}>
             <Label htmlFor="name">Name</Label>
             <Input id="name" {...register("name")} />
-            {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
+            {errors.name && <FloatingErrorText>{errors.name.message}</FloatingErrorText>}
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup style={{ maxWidth: 122 }}>
             <Label htmlFor="height">Height (inches)</Label>
             <Input
               id="height"
               type="number"
               {...register("height")}
             />
-            {errors.height && <ErrorText>{errors.height.message}</ErrorText>}
+            {errors.height && <FloatingErrorText>{errors.height.message}</FloatingErrorText>}
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup style={{ maxWidth: 122 }}>
             <Label htmlFor="weight">Weight (pounds)</Label>
             <Input
               id="weight"
               type="number"
               {...register("weight")}
             />
-            {errors.weight && <ErrorText>{errors.weight.message}</ErrorText>}
+            {errors.weight && <FloatingErrorText>{errors.weight.message}</FloatingErrorText>}
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup style={{ marginBottom: 15 }}>
             <Label>
               <Checkbox {...register("hasDiabetes")} /> I have diabetes
             </Label>
@@ -157,26 +170,25 @@ export default function EnrollParticipantPage() {
               <Checkbox {...register("hadCovid")} /> Had COVID-19
             </Label>
           </FormGroup>
-          <FormGroup>
+          <FormGroup style={{ marginBottom: 68, maxWidth: 400 }}>
             <Label htmlFor="trial">Trial</Label>
-            {isLoading ? (
-              <div>Loading trials...</div>
-            ) : (
-              <Select id="trial" {...register("trial")}>
-                <option value="">Select</option>
-                {trials?.map(trial => (
-                  <option key={trial.id} value={trial.id}>
-                    {trial.name}
-                  </option>
-                ))}
-              </Select>
-            )}
-            {errors.trial && <ErrorText>{errors.trial.message}</ErrorText>}
+            <Select id="trial" {...register("trial")}>
+              <option value="">{isLoading ? "Loading..." : "Select"}</option>
+              {trials?.map(trial => (
+                <option key={trial.id} value={trial.id}>
+                  {trial.name}
+                </option>
+              ))}
+            </Select>
+            {errors.trial && <FloatingErrorText>{errors.trial.message}</FloatingErrorText>}
           </FormGroup>
 
-          <PrimaryButton type="submit" disabled={isPending}>
-            {isPending ? 'Enrolling...' : 'Save'}
-          </PrimaryButton>
+          {/* Button positioned to the right on mobile to help users */}
+          <ButtonContainer>
+            <PrimaryButton type="submit" disabled={isPending}>
+              {isPending ? 'Enrolling...' : 'Save'}
+            </PrimaryButton>
+          </ButtonContainer>
         </form>
       </CardContent>
     </Card>

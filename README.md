@@ -155,6 +155,10 @@ Navigate to http://localhost:3001/graphql to view the GraphQL playground.
 
 ## Testing
 
+Test coverage is enforced through CI/CD pipelines:
+- API: Minimum 85% coverage requirement
+- Web: Minimum 80% coverage requirement
+
 ### Unit tests
 
 ```bash

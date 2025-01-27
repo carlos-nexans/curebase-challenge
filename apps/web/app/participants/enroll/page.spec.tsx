@@ -19,6 +19,7 @@ describe('EnrollParticipantPage', () => {
   const mockRouter = {
     push: vi.fn()
   };
+
   const mockTrials = {
     trials: [
       { id: 1, name: 'Trial 1' },
@@ -51,10 +52,8 @@ describe('EnrollParticipantPage', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Name is required')).toBeInTheDocument();
-      expect(screen.getByText('Height is required')).toBeInTheDocument();
-      expect(screen.getByText('Weight is required')).toBeInTheDocument();
-      expect(screen.getByText('Trial selection is required')).toBeInTheDocument();
+      const errorMessages = screen.getAllByText('This is a required field');
+      expect(errorMessages).toHaveLength(4);
     });
   });
 
