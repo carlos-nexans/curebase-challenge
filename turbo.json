@@ -33,6 +33,10 @@
       "cache": false,
       "persistent": true
     },
+    "test:cov": {
+      "cache": false,
+      "persistent": true
+    },
     "apps/api": {
       "env": [
         "CORS_ORIGIN",

@@ -9,6 +9,7 @@
     "test": "npm run test:unit",
     "test:unit": "turbo test:unit",
     "test:integration": "turbo test:integration",
+    "test:cov": "turbo test:cov",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prisma": "cd apps/api && npx prisma generate",
     "postinstall": "npm run prisma",
