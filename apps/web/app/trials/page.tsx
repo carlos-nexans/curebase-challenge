@@ -6,15 +6,6 @@ import Image from "next/image"
 import { useQuery } from '@tanstack/react-query'
 import { Trial } from '@repo/api/graphql'
 import { graphqlClient } from "../queryClient"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Trials",
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
 
 const TRIALS_QUERY = `
   query {
@@ -29,6 +20,7 @@ const TRIALS_QUERY = `
 function TrialsHeader() {
   return (
     <ResponsiveCardHeader>
+      <title>Trials</title>
       <Heading1>Trials</Heading1>
     </ResponsiveCardHeader>
   )

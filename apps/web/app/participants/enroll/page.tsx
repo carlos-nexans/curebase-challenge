@@ -12,15 +12,6 @@ import { useQuery, useMutation } from "@tanstack/react-query"
 import { EnrollmentResult, Trial } from "@repo/api/graphql"
 import { useRouter } from "next/navigation"
 import styled from "styled-components"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Enroll a participant",
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
 
 const TRIALS_QUERY = `
   query {
@@ -138,6 +129,7 @@ export default function EnrollParticipantPage() {
   return (
     <Card>
       <ResponsiveCardHeader>
+        <title>Enroll a participant</title>
         <Heading1>Enroll a participant</Heading1>
       </ResponsiveCardHeader>
       <CardContent>

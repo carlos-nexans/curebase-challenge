@@ -9,15 +9,6 @@ import { gql } from 'graphql-request'
 import { Participant } from '@repo/api/graphql'
 import { graphqlClient } from "../queryClient"
 import Link from "next/link"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Participants",
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
 
 const GET_PARTICIPANTS = gql`
   query GetParticipants {
@@ -34,6 +25,7 @@ const GET_PARTICIPANTS = gql`
 function ParticipantsHeader() {
   return (
     <ResponsiveCardHeader>
+      <title>Participants</title>
       <Heading1>Participants</Heading1>
       <Link href="/participants/enroll">
         <PrimaryButton>
