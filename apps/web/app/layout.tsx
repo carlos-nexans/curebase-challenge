@@ -4,6 +4,16 @@ import StyledJsxRegistry from "./registry";
 import NavigationHeader from './header';
 import { PageContent } from "@repo/ui/containers";
 import QueryClientProvider from "./queryProvider";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Curebase",
+  description: "Curebase",
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 const lato = Lato({
   subsets: ['latin'],
