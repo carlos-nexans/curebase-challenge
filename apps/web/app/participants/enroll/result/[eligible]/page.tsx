@@ -6,6 +6,15 @@ import { Heading1, Text } from "@repo/ui/typography"
 import styled from "styled-components"
 import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Enrollment result",
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 const CenteredCard = styled(Card)`
   max-width: 400px;

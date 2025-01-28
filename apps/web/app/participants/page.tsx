@@ -9,6 +9,15 @@ import { gql } from 'graphql-request'
 import { Participant } from '@repo/api/graphql'
 import { graphqlClient } from "../queryClient"
 import Link from "next/link"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Participants",
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 const GET_PARTICIPANTS = gql`
   query GetParticipants {
