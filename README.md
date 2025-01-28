@@ -179,6 +179,34 @@ Run integration tests
 npm run test:integration
 ```
 
+### Cross-Browser Testing
+
+The application has been tested across multiple browsers to ensure consistent functionality and appearance:
+
+#### Microsoft Edge 132 (Windows 11) - Participants
+
+![Microsoft Edge 132 on Windows 11](docs/images/20250128_12_30_35_MicrosoftEdge_132.png)
+
+#### Mac 13 Safari 17 - Participants
+
+![Mac 13 Safari 17](docs/images/20250128_12_33_38_safari_17.png)
+
+#### Windows 11 Firefox 134 - Participants
+
+![Windows 11 Firefox 134](docs/images/20250128_12_35_08_firefox_134.png)
+
+#### Mac 13 Safari 17 - Enroll a participant
+
+![Mac 13 Safari 17](docs/images/20250128_12_37_12_safari_17.png)
+
+#### iPhone 12 - Participants
+
+![iPhone 12](docs/images/2025-01-28T12_39_04.280Z_oauth-cdgn.machines-64adc_US_iPhone_12_free_16.7.png)
+
+#### iPhone 12 - Enroll a participant
+
+![iPhone 12](docs/images/2025-01-28T12_39_13.407Z_oauth-cdgn.machines-64adc_US_iPhone_12_free_16.7.png)
+
 ## Linting
 
 ```bash
