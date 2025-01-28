@@ -20,6 +20,7 @@
   - [Cross-Browser Testing](#cross-browser-testing)
 - [Linting](#linting)
 - [Core Web Vitals](#core-web-vitals)
+- [Continuous Integration](#continuous-integration)
 
 ## Introduction
 
@@ -237,3 +238,16 @@ I used PageSpeed Insights to measure the Core Web Vitals of the application. You
 ![Desktop Summary](docs/images/cwv/desktop-summary.png)
 
 ![Desktop Metrics](docs/images/cwv/desktop-metrics.png)
+
+## Continuous Integration
+
+The application is built and tested on every PR. The build and test results are available in the PR checks.
+
+[![PR Checks](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml/badge.svg?branch=main)](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml)
+
+In each PR, the following checks are performed:
+
+- Build: Builds the application and checks for errors.
+- API Tests and Web Tests: Runs unit and integration tests for both applications.
+- Lint: Runs linting and checks for errors.
+
