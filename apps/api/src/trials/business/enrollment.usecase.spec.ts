@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { EnrollmentUseCase } from './enrollment.usecase';
 import { ParticipantsService } from '../services/participants.service';
 import { TrialsService } from '../services/trials.service';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('EnrollmentUseCase', () => {
   let enrollmentUseCase: EnrollmentUseCase;
@@ -159,6 +159,34 @@ describe('EnrollmentUseCase', () => {
       // Assert
       expect(result.isEligible).toBe(false);
       expect(result.ineligibilityReasons).toContain('BMI (35.9) is too high - must be below 30');
+    });
+
+    it('should throw BadRequestException when height is negative', async () => {
+      // Arrange
+      const negativeHeightData = {
+        ...validParticipantData,
+        height: -70,
+      };
+      trialsService.getTrial.mockResolvedValue({ id: 1, name: 'Test Trial', participants: [] });
+
+      // Act & Assert
+      await expect(enrollmentUseCase.enrollParticipant(negativeHeightData))
+        .rejects
+        .toThrow(BadRequestException);
+    });
+
+    it('should throw BadRequestException when weight is negative', async () => {
+      // Arrange
+      const negativeWeightData = {
+        ...validParticipantData,
+        weight: -170,
+      };
+      trialsService.getTrial.mockResolvedValue({ id: 1, name: 'Test Trial', participants: [] });
+
+      // Act & Assert
+      await expect(enrollmentUseCase.enrollParticipant(negativeWeightData))
+        .rejects
+        .toThrow(BadRequestException);
     });
   });
 }); 

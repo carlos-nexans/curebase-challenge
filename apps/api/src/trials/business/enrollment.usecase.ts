@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { ParticipantsService } from '../services/participants.service';
 import { TrialsService } from '../services/trials.service';
 import { Participant } from 'src/graphql';
@@ -56,6 +56,14 @@ export class EnrollmentUseCase {
   }
 
   async enrollParticipant(dto: EnrollParticipantDto): Promise<EnrollmentResult> {
+    // Validate height and weight
+    if (dto.height <= 0) {
+      throw new BadRequestException('Height must be a positive number');
+    }
+    if (dto.weight <= 0) {
+      throw new BadRequestException('Weight must be a positive number');
+    }
+
     // Validate if trial exists
     const trial = await this.trialsService.getTrial(dto.trialId, false);
     if (!trial) {

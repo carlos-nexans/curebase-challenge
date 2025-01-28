@@ -51,19 +51,14 @@ const CREATE_PARTICIPANT_MUTATION = `
 
 const participantSchema = z.object({
   name: z.string().min(1, "This is a required field"),
-  height: z.string().min(1, "This is a required field"),
-  weight: z.string().min(1, "This is a required field"),
+  height: z.string().min(1, "This is a required field").transform(Number).refine(n => n > 0, "Height must be a positive number"),
+  weight: z.string().min(1, "This is a required field").transform(Number).refine(n => n > 0, "Weight must be a positive number"),
   hasDiabetes: z.boolean(),
   hadCovid: z.boolean(),
   trial: z.string().min(1, "This is a required field"),
 })
 
 type ParticipantFormData = z.infer<typeof participantSchema>
-
-const FloatingErrorText = styled(ErrorText)`
-  position: absolute;
-  bottom: -27px;
-`
 
 const ButtonContainer = styled.div`
   @media (max-width: 768px) {
@@ -81,8 +76,6 @@ export default function EnrollParticipantPage() {
     resolver: zodResolver(participantSchema),
     defaultValues: {
       name: "",
-      height: "",
-      weight: "",
       hasDiabetes: false,
       hadCovid: false,
       trial: "",
@@ -102,8 +95,8 @@ export default function EnrollParticipantPage() {
     mutationFn: (data: ParticipantFormData) => 
       graphqlClient.request<MutationResult>(CREATE_PARTICIPANT_MUTATION, {
         name: data.name,
-        height: parseFloat(data.height),
-        weight: parseFloat(data.weight),
+        height: data.height,
+        weight: data.weight,
         hasDiabetes: data.hasDiabetes,
         hadCovid: data.hadCovid,
         trialId: parseInt(data.trial, 10)
@@ -134,30 +127,32 @@ export default function EnrollParticipantPage() {
       </ResponsiveCardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup style={{ maxWidth: 400 }}>
+          <FormGroup>
             <Label htmlFor="name">Name</Label>
-            <Input id="name" {...register("name")} />
-            {errors.name && <FloatingErrorText>{errors.name.message}</FloatingErrorText>}
+            <Input style={{ maxWidth: 400 }} id="name" {...register("name")} />
+            {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
           </FormGroup>
 
-          <FormGroup style={{ maxWidth: 122 }}>
+          <FormGroup>
             <Label htmlFor="height">Height (inches)</Label>
             <Input
+              style={{ maxWidth: 122 }}
               id="height"
               type="number"
               {...register("height")}
             />
-            {errors.height && <FloatingErrorText>{errors.height.message}</FloatingErrorText>}
+            {errors.height && <ErrorText>{errors.height.message}</ErrorText>}
           </FormGroup>
 
-          <FormGroup style={{ maxWidth: 122 }}>
+          <FormGroup>
             <Label htmlFor="weight">Weight (pounds)</Label>
             <Input
+              style={{ maxWidth: 122 }}
               id="weight"
               type="number"
               {...register("weight")}
             />
-            {errors.weight && <FloatingErrorText>{errors.weight.message}</FloatingErrorText>}
+            {errors.weight && <ErrorText>{errors.weight.message}</ErrorText>}
           </FormGroup>
 
           <FormGroup style={{ marginBottom: 15 }}>
@@ -171,9 +166,9 @@ export default function EnrollParticipantPage() {
               <Checkbox {...register("hadCovid")} /> Had COVID-19
             </Label>
           </FormGroup>
-          <FormGroup style={{ marginBottom: 68, maxWidth: 400 }}>
+          <FormGroup style={{ marginBottom: 68 }}>
             <Label htmlFor="trial">Trial</Label>
-            <Select id="trial" {...register("trial")}>
+            <Select id="trial" {...register("trial")} style={{ maxWidth: 400 }}>
               <option value="">{isLoading ? "Loading..." : "Select"}</option>
               {trials?.map(trial => (
                 <option key={trial.id} value={trial.id}>
@@ -181,7 +176,7 @@ export default function EnrollParticipantPage() {
                 </option>
               ))}
             </Select>
-            {errors.trial && <FloatingErrorText>{errors.trial.message}</FloatingErrorText>}
+            {errors.trial && <ErrorText>{errors.trial.message}</ErrorText>}
           </FormGroup>
 
           {/* Button positioned to the right on mobile to help users */}
