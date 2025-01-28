@@ -25,6 +25,7 @@ const GET_PARTICIPANTS = gql`
 function ParticipantsHeader() {
   return (
     <ResponsiveCardHeader>
+      <title>Participants</title>
       <Heading1>Participants</Heading1>
       <Link href="/participants/enroll">
         <PrimaryButton>

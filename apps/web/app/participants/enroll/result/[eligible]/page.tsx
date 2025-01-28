@@ -75,6 +75,7 @@ export default function EligibilityResultPage() {
 
   return (
     <CenteredCard>
+      <title>Enrollment result</title>
       <CardContent>
         <Status isEligible={isEligible} />
         <PrimaryButton onClick={handleOkClick}>OK</PrimaryButton>

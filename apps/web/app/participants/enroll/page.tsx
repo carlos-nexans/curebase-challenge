@@ -129,6 +129,7 @@ export default function EnrollParticipantPage() {
   return (
     <Card>
       <ResponsiveCardHeader>
+        <title>Enroll a participant</title>
         <Heading1>Enroll a participant</Heading1>
       </ResponsiveCardHeader>
       <CardContent>

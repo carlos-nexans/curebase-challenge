@@ -13,7 +13,7 @@ jobs:
     services:
       docker:
         image: docker:20.10.18
-        options: --privileged # Enables Testcontainers to run Docker-in-Docker
+        options: --privileged
     env:
       MIN_COVERAGE: 85
       
@@ -88,3 +88,32 @@ jobs:
       run: |
         npm install
         npm run test:cov
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install API dependencies
+      working-directory: apps/api
+      run: npm install
+
+    - name: Install Web dependencies
+      working-directory: apps/web
+      run: npm install
+
+    - name: Run API lint
+      working-directory: apps/api
+      run: npm run build
+
+    - name: Run Web lint
+      working-directory: apps/web
+      run: npm run build

@@ -20,6 +20,7 @@ const TRIALS_QUERY = `
 function TrialsHeader() {
   return (
     <ResponsiveCardHeader>
+      <title>Trials</title>
       <Heading1>Trials</Heading1>
     </ResponsiveCardHeader>
   )

@@ -17,7 +17,15 @@
 - [Testing](#testing)
   - [Unit tests](#unit-tests)
   - [Integration tests](#integration-tests)
+  - [Cross-Browser Testing](#cross-browser-testing)
 - [Linting](#linting)
+- [Core Web Vitals](#core-web-vitals)
+- [Continuous Integration](#continuous-integration)
+- [Deployment](#deployment)
+
+## TL;DR
+
+[Loom Video - < 3 minutes](https://www.loom.com/share/140239e1210e4e9aa8b01ac141973f89?sid=a2264ca9-5f8b-4f5c-9d7d-7e704aa2ab8e)
 
 ## Introduction
 
@@ -173,14 +181,83 @@ Start the database
 docker-compose up -d db
 ```
 
+If necessary, run migrations and seed the database
+
+```
+npm run db:migrate
+npm run db:seed
+```
+
 Run integration tests
 
 ```bash
 npm run test:integration
 ```
 
+### Cross-Browser Testing
+
+The application has been tested across multiple browsers to ensure consistent functionality and appearance. I used saucelabs to run the tests.
+
+#### Microsoft Edge 132 (Windows 11) - Participants
+
+![Microsoft Edge 132 on Windows 11](docs/images/cross-browser/20250128_12_30_35_MicrosoftEdge_132.png)
+
+#### Mac 13 Safari 17 - Participants
+
+![Mac 13 Safari 17](docs/images/cross-browser/20250128_12_33_38_safari_17.png)
+
+#### Windows 11 Firefox 134 - Participants
+
+![Windows 11 Firefox 134](docs/images/cross-browser/20250128_12_35_08_firefox_134.png)
+
+#### Mac 13 Safari 17 - Enroll a participant
+
+![Mac 13 Safari 17](docs/images/cross-browser/20250128_12_37_12_safari_17.png)
+
+#### iPhone 12 - Participants
+
+<img src="docs/images/cross-browser/2025-01-28T12_39_04.280Z_oauth-cdgn.machines-64adc_US_iPhone_12_free_16.7.png" alt="iPhone 12" style="width:400px;"/>
+
+#### iPhone 12 - Enroll a participant
+
+<img src="docs/images/cross-browser/2025-01-28T12_39_13.407Z_oauth-cdgn.machines-64adc_US_iPhone_12_free_16.7.png" alt="iPhone 12" style="width:400px;"/>
+
 ## Linting
 
 ```bash
 npm run lint
 ```
+
+## Core Web Vitals
+
+I used PageSpeed Insights to measure the Core Web Vitals of the application. You can access the results at https://pagespeed.web.dev/analysis/https-curebase-carlosnexans-com-participants/nu1dxz3skw?form_factor=mobile.
+
+### Mobile
+
+![Mobile Summary](docs/images/cwv/mobile-summary.png)
+
+![Mobile Metrics](docs/images/cwv/mobile-metrics.png)
+
+### Desktop
+
+![Desktop Summary](docs/images/cwv/desktop-summary.png)
+
+![Desktop Metrics](docs/images/cwv/desktop-metrics.png)
+
+## Continuous Integration
+
+The application is built and tested on every PR. The build and test results are available in the PR checks.
+
+[![PR Checks](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml/badge.svg?branch=main)](https://github.com/cdgn-coding/curebase-challenge/actions/workflows/pr_checks.yml)
+
+In each PR, the following checks are performed:
+
+- Build: Builds the application and checks for errors.
+- API Tests and Web Tests: Runs unit and integration tests for both applications.
+- Lint: Runs linting and checks for errors.
+
+## Deployment
+
+The application is deployed to Digital Ocean droplets using Docker.
+
+![Diagram](docs/architecture/diagram.png)
